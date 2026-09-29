@@ -2,5 +2,7 @@
   "name": "CalloutStudio AI - Pembuat Callout Interaktif Foto & Video",
   "description": "Aplikasi cerdas untuk membuat callout interaktif pada foto dan video dengan deteksi otomatis AI, kustomisasi visual dinamis, serta integrasi berbagi langsung ke media sosial.",
   "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
 }

@@ -326,7 +326,7 @@ export const SAMPLE_MEDIA_LIST: SampleMediaItem[] = [
     title: 'Footage Drone Pantai & Laut Tropis (Video)',
     type: 'video',
     category: 'Video Alam & Drone',
-    url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
+    url: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
     thumbnail: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=400&q=80',
     defaultCallouts: [
       {
@@ -372,7 +372,7 @@ export const SAMPLE_MEDIA_LIST: SampleMediaItem[] = [
     title: 'Video Demo Produk & Gerak Visual',
     type: 'video',
     category: 'Video Produk & Edukasi',
-    url: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4',
+    url: 'https://www.w3schools.com/html/mov_bbb.mp4',
     thumbnail: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=400&q=80',
     defaultCallouts: [
       {

@@ -281,6 +281,56 @@ JSON format:
     }
   });
 
+  // Media Proxy for Video/Image to guarantee CORS and Range requests support without browser errors
+  app.get('/api/proxy-media', async (req, res) => {
+    const mediaUrl = req.query.url as string;
+    if (!mediaUrl) {
+      return res.status(400).send('Missing url parameter');
+    }
+
+    try {
+      const headers: Record<string, string> = {};
+      if (req.headers.range) {
+        headers['Range'] = req.headers.range;
+      }
+
+      const response = await fetch(mediaUrl, {
+        headers,
+      });
+
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
+
+      if (response.headers.get('content-type')) {
+        res.setHeader('Content-Type', response.headers.get('content-type')!);
+      }
+      if (response.headers.get('content-range')) {
+        res.setHeader('Content-Range', response.headers.get('content-range')!);
+      }
+      if (response.headers.get('accept-ranges')) {
+        res.setHeader('Accept-Ranges', response.headers.get('accept-ranges')!);
+      }
+      if (response.headers.get('content-length')) {
+        res.setHeader('Content-Length', response.headers.get('content-length')!);
+      }
+
+      res.status(response.status);
+      const buffer = Buffer.from(await response.arrayBuffer());
+      res.send(buffer);
+    } catch (err: any) {
+      console.error('Error proxying media:', err);
+      res.status(500).send('Failed to fetch media');
+    }
+  });
+
+  app.options('/api/proxy-media', (req, res) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS');
+    res.setHeader('Access-Control-Allow-Headers', 'Range, Content-Type');
+    res.sendStatus(204);
+  });
+
   // Mount Vite or static
   if (!isProd) {
     const vite = await createViteServer({

@@ -466,14 +466,27 @@ export default function App() {
               {project.mediaType === 'video' ? (
                 <video
                   ref={videoRef}
-                  src={project.mediaUrl}
-                  crossOrigin="anonymous"
+                  key={project.mediaUrl}
                   onTimeUpdate={handleTimeUpdate}
                   onLoadedMetadata={handleLoadedMetadata}
+                  onError={(e) => {
+                    console.warn('Video source event:', e);
+                  }}
                   playsInline
                   loop
                   className="max-h-[calc(100vh-170px)] max-w-full object-contain pointer-events-auto"
-                />
+                >
+                  <source
+                    src={
+                      typeof window !== 'undefined' && project.mediaUrl.startsWith('http') && !project.mediaUrl.startsWith(window.location.origin) && !project.mediaUrl.startsWith('blob:')
+                        ? `/api/proxy-media?url=${encodeURIComponent(project.mediaUrl)}`
+                        : project.mediaUrl
+                    }
+                    type="video/mp4"
+                  />
+                  <source src={project.mediaUrl} type="video/mp4" />
+                  Browser Anda tidak mendukung pemutaran video ini.
+                </video>
               ) : (
                 <img
                   ref={imageRef}
